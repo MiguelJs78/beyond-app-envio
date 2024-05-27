@@ -1,18 +1,40 @@
-//import Vue from 'vue';
-//import VueRouter from 'vue-router';
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-//import NotFound from '../components/NotFound'; // Importe o componente NotFound
+import HomeView from '../pages/HomeView.vue'
+import LoginView from '../pages/LoginView.vue'
+import RegisterView from '../pages/RegisterView.vue'
+import CourseView from '../pages/CourseView.vue'
 
-//Vue.use(VueRouter);
 
-//const routes = [
+Vue.use(VueRouter);
 
-//  { path: '*', component: NotFound }, // Rota para página não encontrada
-//];
+const routes = [
+  {
+    path: '/',
+    name: 'home',
+    component: HomeView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LoginView
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView
+  },
+  {
+    path: '/courses',
+    name: 'courses',
+    component: CourseView
+  }
+];
 
-//const router = new VueRouter({
-  //routes,
-  //mode: 'history', // Modo de histórico HTML5
-//});
+const router = new VueRouter({
+  routes,
+  mode: 'history',
+});
 
-//export default router;
+export default router;
