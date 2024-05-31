@@ -173,24 +173,25 @@ export default {
     editarItem(item) {
       this.dialog2 = true;
       this.itemEditado = { ...item };
-      
+
     },
     salvarEdicao() {
-  if (this.itemEditado !== null) { // Verifica se itemEditado não é null
-    const itemIndex = this.listaItens.findIndex(listaItem => listaItem.id === this.itemEditado.id);
-    if (itemIndex !== -1) {
-      this.listaItens.splice(itemIndex, 1, this.itemEditado);
-      this.fecharDialogo(); // Altere aqui
-    }
-  }
-},
+      if (this.itemEditado !== null) { // Verifica se itemEditado não é null
+        const itemIndex = this.listaItens.findIndex(listaItem => listaItem.id === this.itemEditado.id);
+        if (itemIndex !== -1) {
+          this.listaItens.splice(itemIndex, 1, this.itemEditado);
+          this.fecharDialogo(); // Altere aqui
+        }
+      }
+    },
     cancelarEdicao() {
       this.itemEditado = null;
     },
     excluirItem(index) {
-      this.listaItens.splice(index, 1)}
+      this.listaItens.splice(index, 1)
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
@@ -198,24 +199,29 @@ export default {
   width: 100%;
   border-collapse: collapse;
 }
+
 .table__head {
   background-color: #f5f5f5;
 }
+
 .table__head__row {
   border-bottom: 1px solid #ddd;
 }
+
 .table__head__label {
   padding: 10px;
   text-align: left;
 }
+
 .table__body__row {
   border-bottom: 1px solid #ddd;
 }
+
 .table__body__data {
   padding: 10px;
 }
+
 .table__body__action {
   display: flex;
   gap: 10px;
-}
-</style>
+}</style>

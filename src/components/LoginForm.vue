@@ -1,59 +1,65 @@
 <template>
-<form class="form login">
-    <h1>Login</h1>
-    
-    <label for="username">Username:</label>
-    <input v-model="username" required class="form__input" type="text" id="username" name="username">
+    <v-app>
+        <v-app-bar app dark elevate-on-scroll>
+            <v-toolbar-title class="titlebar">EducLib</v-toolbar-title>
+        </v-app-bar>
+        <v-main style="background-color: #ffffff">
+            <v-container class="fill-height d-flex align-center justify-center" fluid>
+                <v-card class="pa-4">
+                    <v-card-title class="d-flex justify-center">
+                        <h2>Login</h2>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-form>
+                            <v-text-field v-model="email" label="Email" prepend-icon="mdi-email" type="email"
+                                required></v-text-field>
+                            <v-text-field v-model="password" label="Password" prepend-icon="mdi-lock" type="password"
+                                required></v-text-field>
+                        </v-form>
+                    </v-card-text>
+                    <v-card-actions class="d-flex align-center justify-center">
+                        <v-btn width="150px" color="primary" @click="login()">Entrar</v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-container>
+        </v-main>
 
-    <label for="email">Email</label>
-    <input v-model="email" required class="form__input" type="email" id="email" name="email">
-
-    <button class="form__btn">Fazer login</button>
-</form>
+        <v-footer dark padless>
+            <v-col class="text-center" cols="12"> EducLib </v-col>
+        </v-footer>
+    </v-app>
 </template>
-
+  
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
     data() {
         return {
-            username: '',
-            email: ''
-        }
+            email: "",
+            password: "",
+        };
     },
-    // methods: {
-    //     async login() {
-    //         const loginData = {
-    //             username: this.username,
-    //             email: this.email
-    //         };
-    //     }
-    // }
-}
+    methods: {
+        login() {
+            const auth = getAuth();
+            signInWithEmailAndPassword(auth, this.email, this.password)
+                .then(() => {
+                    console.log("Logado com sucesso!");
+                    this.$router.push("/courses");
+                })
+                .catch((error) => {
+                    console.error("Erro ao fazer login:", error);
+                    // Exibir mensagem de erro para o usuário
+                    if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                        this.errorMessage = 'Credenciais inválidas. Verifique seu e-mail e senha.';
+                    } else {
+                        this.errorMessage = 'Ocorreu um erro ao fazer login. Por favor, tente novamente mais tarde.';
+                    }
+                });
+        },
+    },
+};
+
 </script>
-
-<style>
-.form {
-    display: flex;
-    flex-direction: column;
-    max-width: 240px;
-    padding: 20px;
-    background-color: rgb(233, 233, 233);
-    border-radius: 10px;
-}
-
-.form__input {
-    border: 1px solid gray;
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.form__btn {
-    margin-top: 12px;
-    background-color: rgb(38, 164, 248);
-    border-radius: 5px;
-    padding: 5px;
-}
-
-
-
-</style>
+  
